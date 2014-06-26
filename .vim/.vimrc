@@ -888,13 +888,17 @@ endif
 set makeprg=cd\ ~/proj/aosp/src;\ source\ build/envsetup.sh;\ setpaths;\ m\ showcommands\ libCamObjMdl\ testCamObjMdl
 
 "happy added start
+let g:MyWinHeight=20
+set cmdheight=1
+let &cmdwinheight=g:MyWinHeight
+" execute "set cmdwinheight=".g:MyWinHeight
 set ic
 if has("cscope")
     "for myself vim
     "set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
     set cscopequickfix=c-,d-,e-,g-,s-
 endif
-let g:QuickfixWinHeight = 20
+let g:QuickfixWinHeight = g:MyWinHeight
 nnoremap <silent> ,, :ToggleQuickfixWin<CR>
 
 "hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
@@ -922,7 +926,7 @@ nnoremap <Down> gt
 
 " MRU
 nnoremap <silent> <Space>m :MRU<CR>
-let g:MRU_Window_Height = 20 
+let g:MRU_Window_Height = g:MyWinHeight
 let g:MRU_Exclude_Files = '/.vim\|/.git\|/.repo\|/.svn\|/.cache'
 
 " remembering last position
@@ -937,7 +941,7 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 15000
 let g:ctrlp_by_filename = 1
 let g:ctrlp_working_path_mode = 0 " 'ra'
-let g:ctrlp_max_height = g:MRU_Window_Height
+let g:ctrlp_max_height = g:MyWinHeight
 
 let igdirs = [
     \ 'abi',
