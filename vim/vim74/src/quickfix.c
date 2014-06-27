@@ -2370,7 +2370,11 @@ ex_copen(eap)
 	    /* Create the new window at the very bottom, except when
 	     * :belowright or :aboveleft is used. */
 	    win_goto(lastwin);
+#if 1
+	if (win_split(height, WSP_BOT | WSP_NEWLOC) == FAIL)
+#else
 	if (win_split(height, WSP_BELOW | WSP_NEWLOC) == FAIL)
+#endif
 	    return;		/* not enough room for window */
 	RESET_BINDING(curwin);
 
@@ -3023,6 +3027,9 @@ ex_cnext(eap)
 		    ? BACKWARD_FILE
 		    : BACKWARD,
 	    eap->addr_count > 0 ? (int)eap->line2 : 1, eap->forceit);
+#if 1
+    ex_cclose(eap);
+#endif
 }
 
 /*

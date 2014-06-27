@@ -3240,7 +3240,7 @@ win_line(wp, lnum, startrow, endrow, nochange)
     if (v != 0)
 	line_attr = sign_get_attr((int)v, TRUE);
 # endif
-# if defined(FEAT_QUICKFIX) && defined(FEAT_WINDOWS)
+# if 0 //happy modified defined(FEAT_QUICKFIX) && defined(FEAT_WINDOWS)
     /* Highlight the current line in the quickfix window. */
     if (bt_quickfix(wp->w_buffer) && qf_current_entry(wp) == lnum)
 	line_attr = hl_attr(HLF_L);

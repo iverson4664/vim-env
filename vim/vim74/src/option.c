@@ -6973,6 +6973,45 @@ did_set_string_option(opt_idx, varp, new_value_alloced, oldval, errbuf,
 	    p = p_csqf;
 	    while (*p != NUL)
 	    {
+#if 1
+		int ok = FALSE;
+		if (vim_strchr((char_u *)CSQF_CMDS, *p) != NULL
+			&& p[1] != NUL
+			&& vim_strchr((char_u *)CSQF_FLAGS, p[1]) != NULL)
+		{
+		    switch (p[2])
+		    {
+		    case NUL:
+			p += 2;
+			ok = TRUE;
+			break;
+		    case ',':
+			p += 3;
+			ok = TRUE;
+			break;
+		    case '!':
+			if (p[1] == '0')
+			    break;
+			if (p[3] == NUL)
+			{
+			    p += 3;
+			    ok = TRUE;
+			}
+			else if (p[3] == ',')
+			{
+			    p += 4;
+			    ok = TRUE;
+			}
+			break;
+		    }
+
+		}
+		if (!ok)
+        {
+            errmsg = e_invarg;
+            break;
+        }
+#else
 		if (vim_strchr((char_u *)CSQF_CMDS, *p) == NULL
 			|| p[1] == NUL
 			|| vim_strchr((char_u *)CSQF_FLAGS, p[1]) == NULL
@@ -6985,6 +7024,7 @@ did_set_string_option(opt_idx, varp, new_value_alloced, oldval, errbuf,
 		    break;
 		else
 		    p += 3;
+#endif
 	    }
 	}
     }
