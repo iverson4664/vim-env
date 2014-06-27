@@ -1,5 +1,5 @@
 "
-" Derek Wyatt's Vim Configuration
+" happy's Vim Configuration
 "
 " It's got stuff in it.
 "
@@ -172,7 +172,7 @@ let Tlist_WinWidth = 48
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_close_preview=1
-let g:clang_library_path="/home/y00210927/lib"
+let g:clang_library_path="/home/y00210927/vim/lib"
 " Incrementally match the search
 set incsearch
 
@@ -187,7 +187,7 @@ set grepprg=grep\ -nH\ $*
 
 " Trying out the line numbering thing... never liked it, but that doesn't mean
 " I shouldn't give it another go :)
-"set relativenumber
+set relativenumber
 
 " dictionary for english words
 " I don't actually use this much at all and it makes my life difficult in general
@@ -895,8 +895,8 @@ let &cmdwinheight=g:MyWinHeight
 set ic
 if has("cscope")
     "for myself vim
-    "set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
-    set cscopequickfix=c-,d-,e-,g-,s-
+    set cscopequickfix=c-!,d-!,e-!,f0,g-!,i0,s-!,t0
+    " set cscopequickfix=c-,d-,e-,g-,s-
 endif
 let g:QuickfixWinHeight = g:MyWinHeight
 nnoremap <silent> ,, :ToggleQuickfixWin<CR>
