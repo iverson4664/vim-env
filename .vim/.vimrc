@@ -172,7 +172,7 @@ let Tlist_WinWidth = 48
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_close_preview=1
-let g:clang_library_path="/home/liqf/y00210927/lib"
+let g:clang_library_path="/home/y00210927/lib"
 " Incrementally match the search
 set incsearch
 
@@ -967,7 +967,6 @@ let igdirs = [
     \ 'prebuilts',
     \ 'sdk',
     \ 'tools',
-    \ 'vendor',
     \ 'frameworks/compile',
     \ 'frameworks/ex',
     \ 'frameworks/mff',
@@ -1022,6 +1021,9 @@ let igdirs = [
     \ 'kernel/tools',
     \ 'kernel/usr',
     \ 'kernel/virt',
+    \ 'vendor/hisi',
+    \ 'vendor/opensource',
+    \ 'vendor/thirdparty',
     \ ]
 let g:ctrlp_custom_ignore = { 
     \ 'dir': '\v[\/]('.join(igdirs, '|').')$',

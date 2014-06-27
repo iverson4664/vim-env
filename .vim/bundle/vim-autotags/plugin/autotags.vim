@@ -473,13 +473,15 @@ fun! AutotagsShowAll()
         let a:tagsdir = s:autotags_subdir
         let a:rootdir = resolve(a:tagsdir . "/origin")
         echomsg "Autotags root: " . a:tagsdir . " for " . a:rootdir
+        let num = 1
         for l:entry in split(system("ls " . a:tagsdir), "\n")
             if stridx(l:entry, "include_") == 0
                 let l:path = a:tagsdir . "/" . l:entry
                 if getftype(l:path) == 'link' && isdirectory(l:path)
                     let l:subdir = resolve(l:path)
                     let l:srcdir = resolve(l:path . "/origin")
-                    echomsg "Autotags subdir: " . l:subdir . " for " . l:srcdir
+                    echomsg "subdir " . num . ": " . l:subdir . " for " . l:srcdir
+                    let num = num + 1
                 endif
             endif
         endfor
