@@ -15,6 +15,7 @@ filetype off
  let g:pathogen_disabled = [
     \ 'vim-fuzzyfinder',
     \ 'vim-taglist',
+    \ 'vim-easymotion1.0',
     \ ]
  if v:version < '703584'
      call add(g:pathogen_disabled, 'YouCompleteMe')
