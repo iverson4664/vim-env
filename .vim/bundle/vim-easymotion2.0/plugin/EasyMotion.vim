@@ -22,6 +22,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 " }}}
 
+let g:EasyMotion_leader_key = '<Space>'
+let g:EasyMotion_smartcase = 1
 " == Default configuration {{{
 " -- Option ------------------------------ {{{
 let g:EasyMotion_keys               = get(g:,
@@ -74,9 +76,9 @@ function! s:find_motion_map_helper(motions) "{{{
 endfunction "}}}
 " Find Motion: {{{
 call s:find_motion_map_helper({
-    \ 'f'      : {'fnc' : 'S' , 'cnt' : 1, 'direction'  : 0},
+    \ 'f'      : {'fnc' : 'S' , 'cnt' : 1, 'direction'  : 2},
     \ 'F'      : {'fnc' : 'S' , 'cnt' : 1, 'direction'  : 1},
-    \ 's'      : {'fnc' : 'S' , 'cnt' : 1, 'direction'  : 2},
+    \ 's'      : {'fnc' : 'S' , 'cnt' : 2, 'direction'  : 2},
     \ 'bd-f'   : {'fnc' : 'S' , 'cnt' : 1, 'direction'  : 2},
     \ 't'      : {'fnc' : 'T' , 'cnt' : 1, 'direction'  : 0},
     \ 'T'      : {'fnc' : 'T' , 'cnt' : 1, 'direction'  : 1},
@@ -118,6 +120,7 @@ call s:find_motion_map_helper({
     \ 'tln'    : {'fnc' : 'TL', 'cnt' : -1, 'direction' : 0},
     \ 'Tln'    : {'fnc' : 'TL', 'cnt' : -1, 'direction' : 1},
     \ 'bd-tln' : {'fnc' : 'TL', 'cnt' : -1, 'direction' : 2},
+    \ 'a'      : {'fnc' : 'S' , 'cnt' : -1, 'direction' : 2},
     \ })
 "}}}
 
@@ -322,7 +325,7 @@ if g:EasyMotion_do_mapping == 1
     call s:default_mapping(
         \ ['f', 'F', 's', 't', 'T',
         \  'w', 'W', 'b', 'B', 'e', 'E', 'ge', 'gE',
-        \  'j', 'k', 'n', 'N'], g:EasyMotion_do_mapping)
+        \  'j', 'k', 'n', 'N', 'a'], g:EasyMotion_do_mapping)
 endif "}}}
 
 " == CommandLine Mapping {{{
