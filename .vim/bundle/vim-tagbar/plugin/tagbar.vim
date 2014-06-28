@@ -89,7 +89,7 @@ let s:keymaps = [
     \ ['previewwin',    'P'],
     \ ['nexttag',       '<C-N>'],
     \ ['prevtag',       '<C-P>'],
-    \ ['showproto',     '<Space>'],
+    \ ['showproto',     '<Leader><Space>'],
     \ ['hidenonpublic', 'v'],
     \
     \ ['openfold',      ['+', '<kPlus>', 'zo']],
