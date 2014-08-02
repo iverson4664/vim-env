@@ -1,0 +1,11 @@
+./configure \
+--with-features=huge \
+--enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config \
+--enable-perlinterp \
+--enable-rubyinterp --enable-luainterp \
+--enable-multibyte --enable-sniff --enable-fontset \
+--enable-cscope \
+
+//--prefix=/usr/local/vim74
+
+/usr/local/bin/vim -> /etc/alternatives/vim*
