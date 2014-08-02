@@ -2991,6 +2991,9 @@ ex_cc(eap)
 		    ? 1
 		    : 32767,
 	    eap->forceit);
+#if 1
+    ex_cclose(eap);
+#endif
 }
 
 /*
