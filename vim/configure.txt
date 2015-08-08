@@ -9,3 +9,5 @@
 //--prefix=/usr/local/vim74
 
 /usr/local/bin/vim -> /etc/alternatives/vim*
+
+export https_proxy='http://name:passwd@proxycn2.xx.com:8080'
