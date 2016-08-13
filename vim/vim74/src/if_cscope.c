@@ -1307,7 +1307,7 @@ cs_find_common(opt, pat, forceit, verbose, use_ll, cmdline)
 		     */
             qi = (bt_quickfix(wp->w_buffer) && wp->w_llist_ref != NULL)
                 ?  wp->w_llist_ref : wp->w_llist;
-#if 1
+#if 1 //happy modified
             if (qfpos[1] != '!')
             {
                 qf_jump(qi, 0, 0, forceit);

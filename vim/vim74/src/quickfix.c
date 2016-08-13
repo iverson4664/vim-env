@@ -2315,6 +2315,21 @@ ex_cclose(eap)
 }
 
 /*
+ * happy modified: close quickfix list or location list automatically.
+ * e.g. cnext, cprevious, cc, lnext, lprevious, ll, etc.. 
+ * */
+    void
+qf_auto_close_win(qi)
+    qf_info_T	*qi;
+{
+    win_T	*win = NULL;
+
+    win = qf_find_win(qi);
+    if (win != NULL)
+	win_close(win, FALSE);
+}
+
+/*
  * ":copen": open a window that shows the list of errors.
  * ":lopen": open a window that shows the location list.
  */
@@ -2370,7 +2385,7 @@ ex_copen(eap)
 	    /* Create the new window at the very bottom, except when
 	     * :belowright or :aboveleft is used. */
 	    win_goto(lastwin);
-#if 1
+#if 1 //happy modified
 	if (win_split(height, WSP_BOT | WSP_NEWLOC) == FAIL)
 #else
 	if (win_split(height, WSP_BELOW | WSP_NEWLOC) == FAIL)
@@ -2991,8 +3006,8 @@ ex_cc(eap)
 		    ? 1
 		    : 32767,
 	    eap->forceit);
-#if 1
-    ex_cclose(eap);
+#if 1 //happy modified
+    qf_auto_close_win(qi);
 #endif
 }
 
@@ -3030,8 +3045,8 @@ ex_cnext(eap)
 		    ? BACKWARD_FILE
 		    : BACKWARD,
 	    eap->addr_count > 0 ? (int)eap->line2 : 1, eap->forceit);
-#if 1
-    ex_cclose(eap);
+#if 1 //happy modified
+    qf_auto_close_win(qi);
 #endif
 }
 
