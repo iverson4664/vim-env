@@ -3,3 +3,6 @@ PS1='\e[0;34m\u\e[0m@\e[0;32m\h\e[0m \e[0;33m\w\e[0m\e[0;35m$(__git_ps1 " (%s)")
 
 # add date of history
 export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+
+# add local vim syntax path
+export VIMRUNTIME=~/.vim-env/local/share/vim/
