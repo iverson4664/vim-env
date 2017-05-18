@@ -1,3 +1,5 @@
+" install vim7.4
+
 ./configure \
 --with-features=huge \
 --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config \
@@ -5,11 +7,21 @@
 --enable-rubyinterp --enable-luainterp \
 --enable-multibyte --enable-sniff --enable-fontset \
 --enable-cscope \
+make
+cp ./vim ~/bin/ or sudo make install
 
 //--prefix=/usr/local/vim74
 
 /usr/local/bin/vim -> /etc/alternatives/vim*
 
+" universal ctags installation
+git clone git@github.com:universal-ctags/ctags.git
+./autogen.sh
+./configure
+make
+cp ./ctags ~/bin/ or sudo make install
+
+" proxy config
 export https_proxy='http://name:passwd@proxycn2.xx.com:8080'
 export GIT_SSL_NO_VERIFY=1
 
