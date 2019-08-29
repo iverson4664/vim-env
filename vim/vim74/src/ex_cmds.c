@@ -1361,6 +1361,7 @@ do_shell(cmd, flags)
 #ifdef MSWIN
     int		winstart = FALSE;
 #endif
+    int		silent_redirect_output = FALSE;
 
     /*
      * Disallow shell commands for "rvim".
@@ -1371,6 +1372,17 @@ do_shell(cmd, flags)
     {
 	msg_end();
 	return;
+    }
+
+    /*
+     * happy added: for vim external grep usecase, donot show the shell output when
+     * using grep xxxx to quickfix. e.g. grep -nH xxx -wnrs dir | copen.
+     * Cooperate with shellpipe change "2>&1 | tee" to ">"
+     * */
+    if (flags & SHELL_DOOUT_SILENT)
+    {
+	silent_redirect_output = TRUE;
+	flags &= ~SHELL_DOOUT_SILENT;
     }
 
 #ifdef MSWIN
@@ -1399,7 +1411,8 @@ do_shell(cmd, flags)
 #ifdef MSWIN
 	if (!winstart)
 #endif
-	    stoptermcap();
+	    if (!silent_redirect_output)
+		stoptermcap();
     }
 #ifdef MSWIN
     if (!winstart)
@@ -1411,6 +1424,7 @@ do_shell(cmd, flags)
 #ifdef FEAT_AUTOCMD
 		&& !autocmd_busy
 #endif
+		&& !silent_redirect_output
 		&& msg_silent == 0)
 	for (buf = firstbuf; buf; buf = buf->b_next)
 	    if (bufIsChanged(buf))
@@ -1493,7 +1507,8 @@ do_shell(cmd, flags)
 #ifdef MSWIN
 	if (!winstart) /* if winstart==TRUE, never stopped termcap! */
 #endif
-	    starttermcap();	/* start termcap if not done by wait_return() */
+	    if (!silent_redirect_output)
+		starttermcap();	/* start termcap if not done by wait_return() */
 
 	/*
 	 * In an Amiga window redrawing is caused by asking the window size.

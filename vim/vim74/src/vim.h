@@ -957,6 +957,7 @@ extern char *(*dyn_libintl_textdomain)(const char *domainname);
 #define SHELL_SILENT	16	/* don't print error returned by command */
 #define SHELL_READ	32	/* read lines and insert into buffer */
 #define SHELL_WRITE	64	/* write lines from buffer */
+#define SHELL_DOOUT_SILENT 128  /* happy added: shell donot show redirecting output */
 
 /* Values returned by mch_nodetype() */
 #define NODE_NORMAL	0	/* file or directory, check with mch_isdir()*/

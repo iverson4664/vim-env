@@ -2817,6 +2817,7 @@ ex_make(eap)
     win_T	*wp = NULL;
     qf_info_T	*qi = &ql_info;
     int		res;
+    int		shell_flags = 0;
 #ifdef FEAT_AUTOCMD
     char_u	*au_name = NULL;
 
@@ -2858,6 +2859,31 @@ ex_make(eap)
 	return;
     mch_remove(fname);	    /* in case it's not unique */
 
+    /**
+     * happy added: special treatment for grep + quickfix, donot show shell
+     * output during searching time, change shellpipe from 2>&1 | tee to silentoutput
+     */
+    if (*p_sp != NUL)
+    {
+	if (strstr(p_sp, "silentoutput") != NUL)
+	{
+	    char_u* p = strchr(p_sp, '-');
+	    if (p != NUL)
+	    {
+		p++;
+		if (*p == '\0')
+		    p = ">";
+	    }
+	    else
+		p = ">";
+
+	    STRNCPY(p_sp, p, STRLEN(p));
+	    p_sp[STRLEN(p)] = '\0';
+
+	    shell_flags = SHELL_DOOUT_SILENT;
+	}
+    }
+
     /*
      * If 'shellpipe' empty: don't redirect to 'errorfile'.
      */
@@ -2882,7 +2908,7 @@ ex_make(eap)
     msg_outtrans(cmd);		/* show what we are doing */
 
     /* let the shell know if we are redirecting output or not */
-    do_shell(cmd, *p_sp != NUL ? SHELL_DOOUT : 0);
+    do_shell(cmd, *p_sp != NUL ? (SHELL_DOOUT | shell_flags) : 0);
 
 #ifdef AMIGA
     out_flush();
