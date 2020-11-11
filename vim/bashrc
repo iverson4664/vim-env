@@ -1,3 +1,15 @@
+ # enable git auto completion
+ if [[ -e /etc/bash_completion.d/git ]]; then
+     . /etc/bash_completion.d/git
+ elif [[ -e /usr/share/bash-completion/completions/git ]]; then
+     . /usr/share/bash-completion/completions/git
+ fi
+
+ # fix " __git_ps1: command not found"
+ if [[ -e /usr/lib/git-core/git-sh-prompt ]]; then
+     . /usr/lib/git-core/git-sh-prompt
+ fi
+
 # add new prompt
 PS1='\e[0;34m\u\e[0m@\e[0;32m\h\e[0m \e[0;33m\w\e[0m\e[0;35m$(__git_ps1 " (%s)")\e[0m\n\$ '
 
