@@ -23,6 +23,7 @@ make
 cp ./ctags ~/bin/ or sudo make install
 
 " proxy config
+// !->%21
 export https_proxy='http://name:passwd@proxycn2.xx.com:8080'
 export GIT_SSL_NO_VERIFY=1
 
