@@ -1,0 +1,45 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.{c,h,sh}]
+indent_size = 4
+indent_style = tab
+trim_trailing_whitespace = true
+
+[misc/packcc/packcc.c]
+indent_size = 4
+indent_style = space
+trim_trailing_whitespace = true
+
+[*.{ctags,ps}]
+indent_size = 4
+indent_style = space
+trim_trailing_whitespace = true
+
+[{Makefile*,*.mak}]
+indent_size = 8
+indent_style = tab
+trim_trailing_whitespace = true
+
+[*.rst*]
+indent_size = 4
+indent_style = tab
+trim_trailing_whitespace = true
+
+[gnulib/*.{c,h}]
+tab_width = 8
+
+[misc/optlib2c]
+trim_trailing_whitespace = true
+
+[win32/*]
+end_of_line = crlf
+
+[win32/*.vcxproj*.in]
+end_of_line = lf
+
+[win32/*.vcxproj*]
+insert_final_newline = false
