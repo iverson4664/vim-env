@@ -2,13 +2,18 @@
 
 ./configure \
 --with-features=huge \
---enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config \
+--enable-pythoninterp --with-python-config-dir=$(python2.7-config --configdir) \
 --enable-perlinterp \
 --enable-rubyinterp --enable-luainterp \
 --enable-multibyte --enable-sniff --enable-fontset \
 --enable-cscope \
+
 make
 cp ./vim ~/bin/ or sudo make install
+
+" e.g. python config dir is "where config.c is",
+" maybe /usr/lib/python2.7/config or
+" sudo apt-get install python2.7-dev then get the dir
 
 //--prefix=/usr/local/vim74
 
