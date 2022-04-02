@@ -430,7 +430,12 @@ search(void)
 	if (sigsetjmp(env, 1) == 0) {
 		f = fields[field].findfcn;
 		if (f == findregexp || f == findstring) {
-			findresult = (*f)(Pattern);
+			char* pat = Pattern;
+			if (case_insensitive_flags[field]) {
+				/* FIXME: egrepcaseless only works under lowercase pattern ? */
+				pat = lcasify(Pattern);
+			}
+			findresult = (*f)(pat);
 		} else {
 			if ((nonglobalrefs = myfopen(temp2, "wb")) == NULL) {
 				cannotopen(temp2);

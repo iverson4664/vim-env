@@ -257,6 +257,7 @@ extern	long	totalterms;	/* total inverted index terms */
 extern	BOOL	trun_syms;	/* truncate symbols to 8 characters */
 extern	char	tempstring[TEMPSTRING_LEN + 1]; /* global dummy string buffer */
 extern	char	*tmpdir;	/* temporary directory */
+extern BOOL case_insensitive_flags[FIELDS + 1];
 
 /* command.c global data */
 extern	BOOL	caseless;	/* ignore letter case when searching */
@@ -332,6 +333,7 @@ char	*findcalling(char *pattern);
 char	*findallfcns(char *dummy);
 char	*finddef(char *pattern);
 char	*findfile(char *dummy);
+char	*lcasify(char *s);
 char	*findinclude(char *pattern);
 char	*findsymbol(char *pattern);
 char	*findassign(char *pattern);

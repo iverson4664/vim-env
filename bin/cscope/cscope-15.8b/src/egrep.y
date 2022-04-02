@@ -597,7 +597,7 @@ egrep(char *file, FILE *output, char *format)
     if (out[cstat])
 	goto found;
     for (;;) {
-	if (!iflag) {
+	if (!iflag && !case_insensitive_flags[field]) {
 	    /* all input chars made positive */
 	    cstat = (unsigned int) gotofn[cstat][(unsigned char)*p];
 	} else {

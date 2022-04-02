@@ -75,7 +75,7 @@ static	BOOL	isregexp_valid = NO;	/* regular expression status */
 static	BOOL	match(void);
 static	BOOL	matchrest(void);
 static	POSTING	*getposting(void);
-static	char	*lcasify(char *s);
+/* static	char	*lcasify(char *s); */
 static	void	findcalledbysub(char *file, BOOL macro);
 static	void	findterm(char *pattern);
 static	void	putline(FILE *output);
@@ -267,7 +267,7 @@ find_symbol_or_assignment(char *pattern, BOOL assign_flag)
 
 			/* see if this is a regular expression pattern */
 			if (isregexp_valid == YES) { 
-				if (caseless == YES) {
+				if (caseless == YES || case_insensitive_flags[field]) {
 					s = lcasify(s);
 				}
 				if (*s != '\0' && regexec (&regexp, s, (size_t)0, NULL, 0) == 0) { 
@@ -302,7 +302,7 @@ find_symbol_or_assignment(char *pattern, BOOL assign_flag)
 			if (isalpha((unsigned char)firstchar) || firstchar == '_') {
 				blockp = cp;
 				fetch_string_from_dbase(symbol, sizeof(symbol));
-				if (caseless == YES) {
+				if (caseless == YES || case_insensitive_flags[field]) {
 					s = lcasify(symbol);	/* point to lower case version */
 				}
 				else {
@@ -609,7 +609,7 @@ findfile(char *dummy)
     for (i = 0; i < nsrcfiles; ++i) {
 	char *s;
 
-	if (caseless == YES) {
+	if (caseless == YES || case_insensitive_flags[field]) {
 	    s = lcasify(srcfiles[i]);
 	} else {
 	    s = srcfiles[i];
@@ -696,7 +696,7 @@ findinit(char *pattern)
 	/* HBB 20020620: new: make sure pattern is lowercased. Curses
 	 * mode gets this right all on its own, but at least -L mode
 	 * doesn't */
-	if (caseless == YES) {
+	if (caseless == YES || case_insensitive_flags[field]) {
 		pattern = lcasify(pattern);
 	}
 
@@ -733,7 +733,7 @@ findinit(char *pattern)
 	}
 	/* if this is a regular expression or letter case is to be ignored */
 	/* or there is an inverted index */
-	if (isregexp == YES || caseless == YES || invertedindex == YES) {
+	if (isregexp == YES || caseless == YES || case_insensitive_flags[field] || invertedindex == YES) {
 
 		/* remove a leading ^ */
 		s = pattern;
@@ -803,7 +803,7 @@ match(void)
 		if (*string == '\0') {
 			return(NO);
 		}
-		if (caseless == YES) {
+		if (caseless == YES || case_insensitive_flags[field]) {
 			return (regexec (&regexp, lcasify(string), (size_t)0, NULL, 0) ? NO : YES);
 		}
 		else {
@@ -1020,7 +1020,7 @@ read_block(void)
 	return(blockp);
 }
 
-static char	*
+char *
 lcasify(char *s)
 {
 	static char ls[PATLEN+1];	/* largest possible match string */
@@ -1119,7 +1119,7 @@ findterm(char *pattern)
 		*s = '\0';
 	}
 	/* if letter case is to be ignored */
-	if (caseless == YES) {
+	if (caseless == YES || case_insensitive_flags[field]) {
 		
 		/* convert the prefix to upper case because it is lexically
 		   less than lower case */
@@ -1131,7 +1131,7 @@ findterm(char *pattern)
 	}
 	/* find the term lexically >= the prefix */
 	(void) invfind(&invcontrol, prefix);
-	if (caseless == YES) {	/* restore lower case */
+	if (caseless == YES || case_insensitive_flags[field]) {	/* restore lower case */
 		(void) strcpy(prefix, lcasify(prefix));
 	}
 	/* a null prefix matches the null term in the inverted index,
@@ -1143,7 +1143,7 @@ findterm(char *pattern)
 	do {
 		(void) invterm(&invcontrol, term);	/* get the term */
 		s = term;
-		if (caseless == YES) {
+		if (caseless == YES || case_insensitive_flags[field]) {
 			s = lcasify(s);	/* make it lower case */
 		}
 		/* if it matches */
@@ -1159,7 +1159,7 @@ findterm(char *pattern)
 			
 			/* if ignoring letter case and the term is out of the
 			   range of possible matches */
-			if (caseless == YES) {
+			if (caseless == YES || case_insensitive_flags[field]) {
 				if (strncmp(term, prefix, len) > 0) {
 					break;	/* stop searching */
 				}

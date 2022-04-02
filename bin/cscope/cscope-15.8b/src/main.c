@@ -112,6 +112,9 @@ char	tempstring[TEMPSTRING_LEN + 1]; /* use this as a buffer, instead of 'yytext
 				 * which had better be left alone */
 char	*tmpdir;		/* temporary directory */
 
+/* NO: case sensitive as default, YES: case insensitive */
+BOOL case_insensitive_flags[FIELDS + 1];
+
 static	BOOL	onesearch;		/* one search only in line mode */
 static	char	*reflines;		/* symbol reference lines file */
 
@@ -121,6 +124,7 @@ static	void	initcompress(void);
 static	void	longusage(void);
 static	void	skiplist(FILE *oldrefs);
 static	void	usage(void);
+static int parse_casesensitive_opt();
 
 #ifdef HAVE_FIXKEYPAD
 void	fixkeypad();
@@ -155,7 +159,10 @@ char ** parse_options(int *argc, char **argv)
 	
 
 	while ((opt = getopt_long(argcc, argv,
-	       "hVbcCdeF:f:I:i:kLl0:1:2:3:4:5:6:7:8:9:P:p:qRs:TUuvX",
+			/* enhance caseinsensitive option,
+			 * update -C option to -C [a or cdefgist], a: all search are caseinsensitive */
+		   "hVbcC:deF:f:I:i:kLl0:1:2:3:4:5:6:7:8:9:P:p:qRs:TUuvX",
+	       /* "hVbcCdeF:f:I:i:kLl0:1:2:3:4:5:6:7:8:9:P:p:qRs:TUuvX", */
 	       lopts, &longind)) != -1) {
 		switch(opt) {
 
@@ -193,6 +200,10 @@ char ** parse_options(int *argc, char **argv)
 			compress = NO;
 			break;
 		case 'C':	/* turn on caseless mode for symbol searches */
+			if (parse_casesensitive_opt() != -1) {
+				break;
+			}
+
 			caseless = YES;
 			egrepcaseless(caseless); /* simulate egrep -i flag */
 			break;
@@ -1014,7 +1025,8 @@ longusage(void)
 	fprintf(stderr, "\
 \n\
 -b            Build the cross-reference only.\n\
--C            Ignore letter case when searching.\n\
+-C [a or cdefgist] \n\
+              Ignore letter case(caseinsensitive) when searching.\n\
 -c            Use only ASCII characters in the cross-ref file (don't compress).\n\
 -d            Do not update the cross-reference.\n\
 -e            Suppress the <Ctrl>-e command prompt between files.\n\
@@ -1087,3 +1099,63 @@ myexit(int sig)
 
 	exit(sig);
 }
+
+static int parse_casesensitive_opt()
+{
+	/* legal format, -C [a or c|d|e|f|g|i|s|t] */
+	char* ptr = optarg;
+	int len = strlen(ptr);
+	char* p;
+	int index = -1;
+	int array[FIELDS + 1][2] = {
+		{'a', FIELDS},
+		{'c', CALLING},
+		{'d', CALLEDBY},
+		{'e', REGEXP},
+		{'f', FILENAME},
+		{'g', DEFINITION},
+		{'i', INCLUDES},
+		{'s', SYMBOL},
+		{'t', STRING}
+	};
+
+	if (len == 0) {
+		/* -C with none option, apply opt like original version */
+		return -1;
+	}
+
+	if (len > FIELDS + 1 || strchr(ptr, '-') != NULL) {
+		/* illegal option, e.g. -C -x -y  */
+		usage();
+		myexit(1);
+		return 0;
+	}
+
+	for (p = ptr; *p != '\0'; ++p) {
+		int i;
+
+		index = -1;
+		for (i = 0; i < FIELDS + 1; ++i) {
+			if (array[i][0] == *p) {
+				index = array[i][1];
+				break;
+			}
+		}
+
+		if (index > -1 && index < FIELDS + 1) {
+			if (index == FIELDS) {
+				int i;
+				for (i = 0; i < FIELDS + 1; ++i) {
+					case_insensitive_flags[i] = YES;
+				}
+				break;
+			} else {
+				case_insensitive_flags[index] = YES;
+			}
+		}
+	}
+
+	return 0;
+}
+
+
