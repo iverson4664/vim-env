@@ -42,6 +42,6 @@
 #define CSCOPE_VERSION_H
 
 #define	FILEVERSION	15	/* Initial Open Source and Linux Port */
-#define	FIXVERSION	".8b"	/* feature and bug fix version */
+#define	FIXVERSION	".8b enhanced edition"	/* feature and bug fix version */
 
 #endif /* CSCOPE_VERSION_H */

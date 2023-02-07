@@ -12555,6 +12555,7 @@ f_has(argvars, rettv)
 #if defined(UNIX) && defined(FEAT_X11)
 	"X11",
 #endif
+	"enhanced_edition",
 	NULL
     };
 

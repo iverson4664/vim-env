@@ -722,6 +722,7 @@ static char *(features[]) =
 	"-xpm_w32",
 # endif
 #endif
+	"+enhanced_edition",
 	NULL
 };
 
