@@ -27,6 +27,23 @@ git clone https://github.com/universal-ctags/ctags.git
 make
 cp ./ctags ~/bin/ or sudo make install
 
+" Universal Ctags doesn't load ~/.ctags and ./.ctags at starting up time. Instead,
+" it loads ~/.ctags.d/*.ctags and ./.ctags.d/*.ctags.
+" add swift language for ctags by "ctags' Creating a user-defined language"
+echo "\
+--langdef=Swift
+--langmap=Swift:+.swift
+--kinddef-Swift=v,variable,variables
+--kinddef-Swift=f,function,functions
+--kinddef-Swift=c,class,classes
+--kinddef-Swift=s,struct,structs
+--kinddef-Swift=p,protocol,protocols
+--regex-swift=/(var|let)[ \t  ]+([^:=<]+).*$/\2/v/
+--regex-swift=/func[ \t  ]+([^\(\)<]+)\([^\(\)]*\)/\1/f/
+--regex-swift=/class[ \t  ]+([^:\{<]+).*$/\1/c/
+--regex-swift=/struct[ \t  ]+([^:\{<]+).*$/\1/s/
+--regex-swift=/protocol[ \t  ]+([^:\{<]+).*$/\1/p/" > ~/.ctags.d/swift.ctags
+
 " proxy config
 // !->%21
 export http_proxy='http://name:passwd@proxycn2.xx.com:8080'
