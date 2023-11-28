@@ -1,0 +1,12 @@
+--langdef=Swift
+--langmap=Swift:+.swift
+--kinddef-Swift=v,variable,variables
+--kinddef-Swift=f,function,functions
+--kinddef-Swift=c,class,classes
+--kinddef-Swift=s,struct,structs
+--kinddef-Swift=p,protocol,protocols
+--regex-swift=/(var|let)[ \t  ]+([^:=<]+).*$/\2/v/
+--regex-swift=/func[ \t  ]+([^\(\)<]+)\([^\(\)]*\)/\1/f/
+--regex-swift=/class[ \t  ]+([^:\{<]+).*$/\1/c/
+--regex-swift=/struct[ \t  ]+([^:\{<]+).*$/\1/s/
+--regex-swift=/protocol[ \t  ]+([^:\{<]+).*$/\1/p/

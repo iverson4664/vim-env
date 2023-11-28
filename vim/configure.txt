@@ -44,6 +44,18 @@ echo "\
 --regex-swift=/struct[ \t  ]+([^:\{<]+).*$/\1/s/
 --regex-swift=/protocol[ \t  ]+([^:\{<]+).*$/\1/p/" > ~/.ctags.d/swift.ctags
 
+" link user-defined ctags config
+# auto link user-defined ctags
+if [[ -d ./.vim-env/bin/ctags/.ctags.d ]]; then
+    if ! [[ $(readlink .ctags.d) == "./.vim-env/bin/ctags/.ctags.d" ]]; then
+        if ! [[ -d ./.ctags.d ]]; then
+            echo "link ctags boot-config"
+            ln -s ./.vim-env/bin/ctags/.ctags.d .ctags.d
+        fi
+    fi
+fi
+
+
 " proxy config
 // !->%21
 export http_proxy='http://name:passwd@proxycn2.xx.com:8080'
