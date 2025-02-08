@@ -1,3 +1,14 @@
+# history settings
+HISTCONTROL=ignoreboth
+shopt -s histappend
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# some ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
  # enable git auto completion
  if [[ -e /etc/bash_completion.d/git ]]; then
      . /etc/bash_completion.d/git
@@ -10,6 +21,31 @@
      . /usr/lib/git-core/git-sh-prompt
  fi
 
+# # auto config vim
+# if [[ -d ./.vim-env ]]; then
+#     echo "auto config vim..."
+#     if ! [[ $(readlink .vim) == "./.vim-env/.vim" ]]; then
+#         echo "link vim"
+#         rm -rf .vim
+#         ln -s ./.vim-env/.vim .vim
+#     fi
+#     if ! [[ $(readlink .vimrc) == "./.vim/.vimrc" ]]; then
+#         echo "link vimrc"
+#         rm -f .vimrc
+#         ln -s ./.vim/.vimrc .vimrc
+#     fi
+# fi
+
+# auto link user-defined ctags
+if [[ -d ./.vim-env/bin/ctags/.ctags.d ]]; then
+    if ! [[ $(readlink .ctags.d) == "./.vim-env/bin/ctags/.ctags.d" ]]; then
+        if ! [[ -d ./.ctags.d ]]; then
+            echo "link ctags boot-config"
+            ln -s ./.vim-env/bin/ctags/.ctags.d .ctags.d
+        fi
+    fi
+fi
+
 # add new prompt
 PS1='\e[0;34m\u\e[0m@\e[0;32m\h\e[0m \e[0;33m\w\e[0m\e[0;35m$(__git_ps1 " (%s)")\e[0m\n\$ '
 
@@ -18,3 +54,5 @@ export HISTTIMEFORMAT="%h/%d - %H:%M:%S "
 
 # add local vim syntax path
 export VIMRUNTIME=~/.vim-env/local/share/vim/
+
+export PATH=~/bin:xxx

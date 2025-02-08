@@ -44,7 +44,7 @@ echo "\
 --regex-swift=/struct[ \t  ]+([^:\{<]+).*$/\1/s/
 --regex-swift=/protocol[ \t  ]+([^:\{<]+).*$/\1/p/" > ~/.ctags.d/swift.ctags
 
-" link user-defined ctags config
+" link user-defined ctags config in bash
 # auto link user-defined ctags
 if [[ -d ./.vim-env/bin/ctags/.ctags.d ]]; then
     if ! [[ $(readlink .ctags.d) == "./.vim-env/bin/ctags/.ctags.d" ]]; then
