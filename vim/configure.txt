@@ -11,6 +11,7 @@
 make
 cp ./vim ~/bin/ or sudo make install
 
+" python2.7-config issue
 " e.g. python config dir is "where config.c is",
 " maybe /usr/lib/python2.7/config or
 " sudo apt-get install python2.7-dev then get the dir
@@ -55,6 +56,11 @@ if [[ -d ./.vim-env/bin/ctags/.ctags.d ]]; then
     fi
 fi
 
+" cscope enhanced edition installation
+cd ~/.vim-env/bin/cscope/cscope-xxx
+./configure
+make
+cp ./src/cscope ~/bin or sudo make install
 
 " proxy config
 // !->%21
@@ -69,3 +75,15 @@ git commit -m "xxx" --author="happy <happy@MyUbuntu.(none)>"
 [core]
     editor = vim
     excludesfile = ~/.gitignore
+
+" compiling issue
+" ncurses library issue
+sudo apt-get install libncurses5-dev
+" if installation failed due to compatibility issue, try next
+apt install aptitude
+aptitude install libncurses-dev
+" then redo ncurses5 installation
+
+
+
+
