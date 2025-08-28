@@ -1,0 +1,68 @@
+# --langdef=objc
+# --langmap=objc:.m.h
+# # ==================== 属性正则表达式（按优先级排序）====================
+# # 1. 高优先级：专门处理 block 类型的属性（解决 void (^xxx)(void) 问题）
+# --regex-objc=/@property[[:space:]]*$[^)]+$[[:space:]]+[^;]+\^([[:alnum:]_]+)[[:space:]]*[^;]*;/\1,property,P/
+# # 2. 处理没有修饰符的 block 属性
+# --regex-objc=/@property[[:space:]]+[^;]+\^([[:alnum:]_]+)[[:space:]]*[^;]*;/\1,property,P/
+# # 3. 处理带泛型的 block 属性
+# --regex-objc=/@property[[:space:]]*$[^)]+$[[:space:]]+[^;]+[[:space:]]*\^([[:alnum:]_]+)[[:space:]]*[^;]*;/\1,property,P/
+# # 4. 处理普通对象属性（带修饰符）
+# --regex-objc=/@property[[:space:]]*$[^)]+$[[:space:]]+[^;*]+[[:space:]]*\*([[:alnum:]_]+);/\1,property,P/
+# # 5. 处理普通对象属性（无修饰符）
+# --regex-objc=/@property[[:space:]]+[^;*]+[[:space:]]*\*([[:alnum:]_]+);/\1,property,P/
+# # 6. 处理基本类型属性（带修饰符）
+# --regex-objc=/@property[[:space:]]*$[^)]+$[[:space:]]+[^;*]+[[:space:]]+([[:alnum:]_]+);/\1,property,P/
+# # 7. 处理基本类型属性（无修饰符）
+# --regex-objc=/@property[[:space:]]+[^;*]+[[:space:]]+([[:alnum:]_]+);/\1,property,P/
+# # ==================== 方法和类定义 ====================
+# # 类接口
+# --regex-objc=/^@interface[[:space:]]+([[:alnum:]_]+)[[:space:]]*:?[[:space:]]*[[:alnum:]_]*/\1,interface,i/
+# # 类实现
+# --regex-objc=/^@implementation[[:space:]]+([[:alnum:]_]+)/\1,implementation,I/
+# # 协议
+# # --regex-objc=/^@protocol[[:space:]]+([[:alnum:]_]+)/\1,protocol,p/
+# # 实例方法（带参数）
+# --regex-objc=/^[+-][[:space:]]*$[^)]+$[[:space:]]*([[:alnum:]_]+):/\1,method,m/
+# # 实例方法（无参数）
+# --regex-objc=/^[+-][[:space:]]*$[^)]+$[[:space:]]*([[:alnum:]_]+)/\1,method,m/
+# # 类方法（带参数）
+# --regex-objc=/^\+[[:space:]]*$[^)]+$[[:space:]]*([[:alnum:]_]+):/\1,classmethod,c/
+# # 类方法（无参数）
+# --regex-objc=/^\+[[:space:]]*$[^)]+$[[:space:]]*([[:alnum:]_]+)/\1,classmethod,c/
+# # ==================== 宏和类型定义 ====================
+# # 宏定义
+# --regex-objc=/^#define[[:space:]]+([[:alnum:]_]+)/\1,macro,d/
+# # 类型定义
+# --regex-objc=/^typedef[[:space:]]+[^;]+[[:space:]]+([[:alnum:]_]+);/\1,typedef,t/
+# # 枚举
+# --regex-objc=/^enum[[:space:]]+([[:alnum:]_]+)/\1,enum,e/
+# --regex-objc=/^[[:space:]]*([[:alnum:]_]+)[[:space:]]*=[[:space:]]*[^,]*,/\1,enumerator,E/
+# # ==================== 字段和变量 ====================
+# # 实例变量
+# --regex-objc=/^[[:space:]]*[[:alnum:]_]+[[:space:]]*\*?([[:alnum:]_]+);/\1,field,f/
+# # 静态变量
+# --regex-objc=/^[[:space:]]*static[[:space:]]+[^;]+[[:space:]]+([[:alnum:]_]+);/\1,variable,v/
+# # ==================== 其他结构 ====================
+# # 结构体
+# --regex-objc=/^struct[[:space:]]+([[:alnum:]_]+)/\1,struct,s/
+# # 联合体
+# --regex-objc=/^union[[:space:]]+([[:alnum:]_]+)/\1,union,u/
+# # ==================== 输出格式设置 ====================
+# # 设置输出格式
+# --fields=+afikKlnsStSz
+# # 设置kind显示名称
+# --kinddef-objc=i,interface,interfaces
+# --kinddef-objc=I,implementation,implementations
+# # --kinddef-objc=p,protocol,protocols
+# --kinddef-objc=m,method,methods
+# --kinddef-objc=c,classmethod,classmethods
+# --kinddef-objc=P,property,properties
+# --kinddef-objc=f,field,fields
+# --kinddef-objc=v,variable,variables
+# --kinddef-objc=t,typedef,typedefs
+# --kinddef-objc=d,macro,macros
+# --kinddef-objc=e,enum,enums
+# --kinddef-objc=E,enumerator,enumerators
+# --kinddef-objc=s,struct,structs
+# --kinddef-objc=u,union,unions
